@@ -1,0 +1,34 @@
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Naive Bayes Classifier
+nb_model = MultinomialNB()
+nb_model.fit(X_train_tfidf, y_train)
+y_pred_nb = nb_model.predict(X_test_tfidf)
+
+# Logistic Regression
+lr_model = LogisticRegression()
+lr_model.fit(X_train_tfidf, y_train)
+y_pred_lr = lr_model.predict(X_test_tfidf)
+
+# Support Vector Machine
+svm_model = SVC(kernel='linear')
+svm_model.fit(X_train_tfidf, y_train)
+y_pred_svm = svm_model.predict(X_test_tfidf)
+
+# Evaluate models
+def evaluate_model(y_true, y_pred):
+    print(f'Accuracy: {accuracy_score(y_true, y_pred)}')
+    print(f'Classification Report:\n{classification_report(y_true, y_pred)}')
+    print(f'Confusion Matrix:\n{confusion_matrix(y_true, y_pred)}')
+
+print("Naive Bayes Evaluation:")
+evaluate_model(y_test, y_pred_nb)
+
+print("\nLogistic Regression Evaluation:")
+evaluate_model(y_test, y_pred_lr)
+
+print("\nSVM Evaluation:")
+evaluate_model(y_test, y_pred_svm)
